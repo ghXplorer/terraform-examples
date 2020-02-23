@@ -1,6 +1,3 @@
-# comment line
-
-
 provider "aws" {
   version = "~> 2.50"
   region = "eu-central-1"
