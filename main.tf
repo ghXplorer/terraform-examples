@@ -13,11 +13,12 @@ resource "aws_instance" "example" {
   user_data = <<-EOF
               #!/bin/bash
               yum update -y
+              mkdir busybox_app && cd busybox_app
               wget https://busybox.net/downloads/binaries/1.28.1-defconfig-multiarch/busybox-x86_64
               mv busybox-x86_64 busybox
               chmod +x busybox
               echo "Hello, World" > index.html
-              nohup busybox httpd -f -p 8080 &
+              nohup ./busybox httpd -f -p 8080 &
               EOF
   tags = {
     Name = "terraform-example"
@@ -33,5 +34,19 @@ resource "aws_security_group" "instance" {
     to_port     = 8080
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
+  }
+ 
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["176.120.238.0/24"]
+  }
+
+  egress {
+    from_port       = 0
+    to_port         = 0
+    protocol        = "-1"
+    cidr_blocks     = ["0.0.0.0/0"]
   }
 }
