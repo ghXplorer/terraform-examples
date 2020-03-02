@@ -6,9 +6,10 @@ Error: error deleting S3 Bucket (terraform-up-and-running-state-26022020): Bucke
 The bucket you tried to delete is not empty. You must delete all versions in the bucket.
 '''
 
-BUCKET = 'terraform-up-and-running-state-26022020'
-
 import boto3
+
+
+BUCKET = 'terraform-up-and-running-state-26022020'
 
 s3 = boto3.resource('s3')
 bucket = s3.Bucket(BUCKET)
