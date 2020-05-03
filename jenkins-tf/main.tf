@@ -32,3 +32,8 @@ module "ec2-instance" {
   }
 
 }
+
+output "ec2_instance_ip" {
+  description = "Public IP address of the instance"  
+  value       = module.ec2-instance.public_ip
+}
