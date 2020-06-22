@@ -17,8 +17,8 @@ module "ec2-instance" {
                            #!/bin/bash
                            apt -y update
                            apt install -y default-jre
-                           TSTX="$(update-java-alternatives -l |  python3 -c 'import sys; print("\""+ sys.stdin.read().split()[2] + "\"")')"
-                           echo "JAVA_HOME=$TSTX" >> /etc/environment
+                           TSTX=$(update-java-alternatives -l | awk '{print $3}')
+                           echo "JAVA_HOME=\"$TSTX\"" >> /etc/environment
                            source /etc/environment
                            wget -q -O - https://pkg.jenkins.io/debian/jenkins-ci.org.key | apt-key add -
                            sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
